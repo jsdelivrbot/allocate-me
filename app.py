@@ -1,28 +1,23 @@
 #!/usr/bin/env python3
-import json
 import re
 import uuid
-from datetime import datetime, timedelta
-from time import time
+from datetime import timedelta
 
 import pyexcel
 import pytz
 import vobject
 from dateutil.parser import parse
 from dateutil.rrule import rrule, rruleset, WEEKLY
-from flask import Flask
+from flask import Flask, render_template, request
+from xlrd.biffh import XLRDError
 
 from utils import dates_between_dates, filter_row, get_pretty_location, parse_dates
 
 
 app = Flask(__name__)
 
-INPUT_FILENAME = 'timetable-example.xls'
 OUTPUT_FILENAME = 'timetable-example.ics'
-
 DURATION_REGEX = re.compile(r'([\d.]+) hrs?')
-
-
 DEFAULT_TIMEZONE = pytz.timezone('Australia/Melbourne')
 
 
@@ -56,41 +51,61 @@ def build_event(record):
     }
 
 
+@app.route('/upload', methods=['POST', ])
+def upload():
+    if request.method == 'POST':
+        # Check if the post request has the file part
+        if 'allocatexls' not in request.files:
+            return 'No file received.'
+        input_file = request.files['allocatexls']
+
+        # If the user doesn't select a file, the browser also
+        # submit an empty part without a filename.
+        if input_file.filename == '':
+            return 'No file selected.'
+
+        if not input_file.filename.lower().endswith('.xls'):
+            return 'File must be XLS format.'
+
+        try:
+            sheet = pyexcel.get_sheet(file_content=input_file.read(), file_type='xls', name_columns_by_row=1)
+            del sheet.row[filter_row]  # Delete empty rows
+            records = sheet.to_records()
+        except XLRDError as e:
+            return 'File is corrupt.'
+
+        cal = vobject.iCalendar()
+        for record in records:
+            event = build_event(record)
+            vevent = cal.add('vevent')
+            vevent.add('uid').value = str(uuid.uuid4()).upper()
+            vevent.add('summary').value = event['title']
+            vevent.add('description').value = event['description']
+            vevent.add('location').value = event['location']
+            vevent.add('dtstart').value = event['event_start']
+            vevent.add('dtend').value = event['event_end']
+
+            ruleset = rruleset()
+            ruleset.rrule(
+                rrule(WEEKLY, byweekday=event['day_index'], until=event['until'])
+            )
+
+            for exdate in event['excludes']:
+                ruleset.exdate(exdate)
+
+            vevent.rruleset = ruleset
+
+        with open(OUTPUT_FILENAME, 'w') as output:
+            cal.serialize(output)
+
+        return 'Done.'
+
+    return ''
+
+
 @app.route('/')
 def home():
-    t0 = time()
-
-    sheet = pyexcel.get_sheet(file_name=INPUT_FILENAME, name_columns_by_row=1)
-    del sheet.row[filter_row]  # Delete empty rows
-    records = sheet.to_records()
-
-    cal = vobject.iCalendar()
-    for record in records:
-        event = build_event(record)
-        vevent = cal.add('vevent')
-        vevent.add('uid').value = str(uuid.uuid4()).upper()
-        vevent.add('summary').value = event['title']
-        vevent.add('description').value = event['description']
-        vevent.add('location').value = event['location']
-        vevent.add('dtstart').value = event['event_start']
-        vevent.add('dtend').value = event['event_end']
-
-        ruleset = rruleset()
-        ruleset.rrule(
-            rrule(WEEKLY, byweekday=event['day_index'], until=event['until'])
-        )
-
-        for exdate in event['excludes']:
-            ruleset.exdate(exdate)
-
-        vevent.rruleset = ruleset
-
-    with open(OUTPUT_FILENAME, 'w') as output:
-        cal.serialize(output)
-
-    t1 = time()
-    return '{:0f} ms'.format((t1 - t0) * 1000)
-
+    return render_template('home.html')
 
 if __name__ == '__main__':
     app.run()

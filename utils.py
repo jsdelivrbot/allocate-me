@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 
 
 LOCATION_REGEX = re.compile(r'(?P<campus>\w+)_(?P<street_number>\d+)(?P<street_code>\w+)/(?P<room>\w+)')
-
 CLAYTON_STREET_NAMES = {
     'All': 'Alliance Lane',
     'Anc': 'Ancora Imparo Way',
