@@ -10,9 +10,12 @@ import pytz
 import vobject
 from dateutil.parser import parse
 from dateutil.rrule import rrule, rruleset, WEEKLY
+from flask import Flask
 
 from utils import dates_between_dates, filter_row, get_pretty_location, parse_dates
 
+
+app = Flask(__name__)
 
 INPUT_FILENAME = 'timetable-example.xls'
 OUTPUT_FILENAME = 'timetable-example.ics'
@@ -53,7 +56,10 @@ def build_event(record):
     }
 
 
-def main():
+@app.route('/')
+def home():
+    t0 = time()
+
     sheet = pyexcel.get_sheet(file_name=INPUT_FILENAME, name_columns_by_row=1)
     del sheet.row[filter_row]  # Delete empty rows
     records = sheet.to_records()
@@ -82,9 +88,9 @@ def main():
     with open(OUTPUT_FILENAME, 'w') as output:
         cal.serialize(output)
 
+    t1 = time()
+    return '{:0f} ms'.format((t1 - t0) * 1000)
+
 
 if __name__ == '__main__':
-    t0 = time()
-    main()
-    t1 = time()
-    print('{:0f} ms'.format((t1 - t0) * 1000))
+    app.run()

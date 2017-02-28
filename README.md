@@ -1,6 +1,6 @@
 # allocate-me
 
-Simple Python script to convert an exported timetable from Monash University's Allocate Plus to iCal.
+Simple web app to convert an exported timetable from Monash University's Allocate Plus to iCal.
 
 ## Getting Started
 
@@ -12,3 +12,5 @@ Inside a virtual env:
 pip install -r requirements.txt
 ./app.py
 ```
+
+In your browser, go to `http://localhost:5000`.
