@@ -55,9 +55,9 @@ def build_event(record):
 def upload():
     if request.method == 'POST':
         # Check if the post request has the file part
-        if 'allocatexls' not in request.files:
+        if 'file' not in request.files:
             return 'No file received.'
-        input_file = request.files['allocatexls']
+        input_file = request.files['file']
 
         # If the user doesn't select a file, the browser also
         # submit an empty part without a filename.
@@ -95,10 +95,7 @@ def upload():
 
             vevent.rruleset = ruleset
 
-        with open(OUTPUT_FILENAME, 'w') as output:
-            cal.serialize(output)
-
-        return 'Done.'
+        return cal.serialize()
 
     return ''
 
