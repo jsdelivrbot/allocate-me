@@ -16,7 +16,6 @@ from utils import dates_between_dates, filter_row, get_pretty_location, parse_da
 
 app = Flask(__name__)
 
-OUTPUT_FILENAME = 'timetable-example.ics'
 DURATION_REGEX = re.compile(r'([\d.]+) hrs?')
 DEFAULT_TIMEZONE = pytz.timezone('Australia/Melbourne')
 
