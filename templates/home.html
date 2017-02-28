@@ -98,10 +98,6 @@
   <script>
   Dropzone.options.allocateDropzone = {
     init: function() {
-      this.on("complete", function(file) {
-        // this.removeFile(file);
-      });
-
       this.on("addedfile", function(file) {
         // Set a default thumbnail.
         this.emit("thumbnail", file, "https://www.monash.edu/__data/assets/image/0020/13718/favicon-120.png");
