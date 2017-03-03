@@ -4,8 +4,6 @@ Simple web app to convert an exported timetable from Monash University's Allocat
 
 ## Getting Started
 
-Copy your timetable export to `timetable-example.xls` in this directory.
-
 Inside a virtual env:
 
 ```bash
