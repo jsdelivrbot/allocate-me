@@ -4,16 +4,16 @@ import style from 'app.css'
 import dzStyle from 'dropzone/dist/dropzone.css'
 
 Dropzone.options.allocateDropzone = {
-  init: function() {
-    this.on("addedfile", function(file) {
+  init: () => {
+    this.on('addedfile', (inputFile) => {
       // Set a default thumbnail.
-      this.emit("thumbnail", file, "https://www.monash.edu/__data/assets/image/0020/13718/favicon-120.png");
-    });
+      this.emit('thumbnail', inputFile, 'https://www.monash.edu/__data/assets/image/0020/13718/favicon-120.png');
+    })
 
-    this.on("success", function(file, response) {
-      var fileName = file.name.split('.')[0] + ".ics"
-      var file = new File([response], fileName, {type: "text/calendar;charset=utf-8"});
-      FileSaver.saveAs(file);
-    });
+    this.on('success', (inputFile, response) => {
+      let outputFileName = inputFile.name.split('.')[0] + '.ics'
+      let outputFile = new File([response], outputFileName, {type: 'text/calendar;charset=utf-8'})
+      FileSaver.saveAs(outputFile)
+    })
   }
-};
+}
