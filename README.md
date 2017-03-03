@@ -10,7 +10,10 @@ Inside a virtual env:
 
 ```bash
 pip install -r requirements.txt
-./app.py
+bower install
+
+export FLASK_DEBUG=1 FLASK_APP=app.py
+flask run
 ```
 
 In your browser, go to `http://localhost:5000`.

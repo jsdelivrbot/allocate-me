@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import re
 import uuid
 from datetime import timedelta
@@ -8,7 +9,7 @@ import pytz
 import vobject
 from dateutil.parser import parse
 from dateutil.rrule import rrule, rruleset, WEEKLY
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from xlrd.biffh import XLRDError
 
 from utils import dates_between_dates, filter_row, get_pretty_location, parse_dates
@@ -102,6 +103,17 @@ def upload():
 @app.route('/')
 def home():
     return render_template('home.html')
+
+
+@app.route('/bower_components/<path:path>')
+def send_bower(path):
+    return send_from_directory(os.path.join(app.root_path, 'bower_components'), path)
+
+
+@app.route('/static/<path:path>')
+def send_dist(path):
+    return send_from_directory(os.path.join(app.root_path, 'static'), path)
+
 
 if __name__ == '__main__':
     app.run()

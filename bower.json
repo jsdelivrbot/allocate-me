@@ -1,0 +1,22 @@
+{
+  "name": "allocate-me",
+  "version": "1.0.0",
+  "homepage": "https://github.com/skozer/allocate-me",
+  "authors": [
+    "Sean Kozer <sean.kozer@gmail.com>"
+  ],
+  "description": "Convert a Monash University timetable to iCal",
+  "license": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "dropzone": "~4.3.0",
+    "filesaver": "~1.3.3"
+  }
+}
