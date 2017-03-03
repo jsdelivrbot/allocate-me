@@ -28,4 +28,8 @@ docs/_build
 cover
 
 # JavaScript
-bower_components
+node_modules
+
+# Build
+static/bundle.js
+static/styles.css

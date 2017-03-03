@@ -1,3 +1,8 @@
+import Dropzone from 'dropzone'
+import FileSaver from 'file-saver'
+import style from 'app.css'
+import dzStyle from 'dropzone/dist/dropzone.css'
+
 Dropzone.options.allocateDropzone = {
   init: function() {
     this.on("addedfile", function(file) {
@@ -8,7 +13,7 @@ Dropzone.options.allocateDropzone = {
     this.on("success", function(file, response) {
       var fileName = file.name.split('.')[0] + ".ics"
       var file = new File([response], fileName, {type: "text/calendar;charset=utf-8"});
-      saveAs(file);
+      FileSaver.saveAs(file);
     });
   }
 };

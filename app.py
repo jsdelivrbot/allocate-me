@@ -104,16 +104,5 @@ def upload():
 def home():
     return render_template('home.html')
 
-
-@app.route('/bower_components/<path:path>')
-def send_bower(path):
-    return send_from_directory(os.path.join(app.root_path, 'bower_components'), path)
-
-
-@app.route('/static/<path:path>')
-def send_dist(path):
-    return send_from_directory(os.path.join(app.root_path, 'static'), path)
-
-
 if __name__ == '__main__':
     app.run()
