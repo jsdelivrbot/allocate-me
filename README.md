@@ -8,8 +8,9 @@ Inside a virtual env:
 
 ```bash
 pip install -r requirements.txt
-bower install
+npm install
 
+webpack
 export FLASK_DEBUG=1 FLASK_APP=app.py
 flask run
 ```
