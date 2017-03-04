@@ -2,10 +2,15 @@
   "name": "allocate-me",
   "version": "1.0.0",
   "description": "Convert a Monash University timetable to iCal",
+  "engines": {
+    "npm": "3.7.x"
+  },
   "scripts": {
-    "build": "NODE_ENV=production npm run build:vendor && NODE_ENV=production webpack",
-    "build:vendor": "BUILD_VENDOR=true webpack",
-    "dev": "npm run build:vendor && NODE_ENV=development webpack --watch --progress"
+    "build": "NODE_ENV=production npm run build:vendor && NODE_ENV=production webpack -p --progress --colors",
+    "build:vendor": "BUILD_VENDOR=true webpack -p --progress --colors",
+    "dev": "npm run build:vendor && NODE_ENV=development webpack --watch --progress --colors",
+    "heroku-postbuild": "npm run build",
+    "start": "gunicorn server.app:app --timeout 10"
   },
   "repository": {
     "type": "git",

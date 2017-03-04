@@ -12,7 +12,7 @@ from dateutil.rrule import rrule, rruleset, WEEKLY
 from flask import Flask, render_template, request, send_from_directory
 from xlrd.biffh import XLRDError
 
-from utils import dates_between_dates, filter_row, get_pretty_location, parse_dates
+from .utils import dates_between_dates, filter_row, get_pretty_location, parse_dates
 
 
 app = Flask(__name__)
