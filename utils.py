@@ -2,7 +2,8 @@ import re
 from datetime import datetime, timedelta
 
 
-LOCATION_REGEX = re.compile(r'(?P<campus>\w+)_(?P<street_number>\d+)(?P<street_code>\w+)/(?P<room>\w+)')
+CLAYTON_LOCATION_REGEX = re.compile(r'(?P<campus>\w+)_(?P<street_number>\d+)(?P<street_code>\w+)/(?P<room>\w+)')
+CAULFIELD_LOCATION_REGEX = re.compile(r'(?P<campus>\w+)_(?P<building>\w+)/(?P<room>[\w\^]+)')
 CLAYTON_STREET_NAMES = {
     'All': 'Alliance Lane',
     'Anc': 'Ancora Imparo Way',
@@ -19,13 +20,20 @@ CLAYTON_STREET_NAMES = {
 
 def get_pretty_location(location):
     if location.startswith('CL'):
-        loc = LOCATION_REGEX.match(location).groupdict()
+        loc = CLAYTON_LOCATION_REGEX.match(location).groupdict()
         street_name = CLAYTON_STREET_NAMES.get(loc.get('street_code', ''))
 
         return 'Room {room}, {street_number} {street_name}, Monash University Clayton Campus'.format(
             room=loc.get('room'),
             street_number=loc.get('street_number'),
             street_name=street_name,
+        )
+    if location.startswith('CA'):
+        loc = CAULFIELD_LOCATION_REGEX.match(location).groupdict()
+        room = loc.get('room').replace('^', ', ')
+        return 'Room {room}, Building {building}, Monash University Caulfield Campus'.format(
+            room=room,
+            building=loc.get('building'),
         )
 
     return location
