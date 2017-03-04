@@ -1,14 +1,13 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const webpack = require('webpack')
 const path = require('path')
 const merge = require('webpack-merge')
 
 const BUILD_VENDOR = process.env.BUILD_VENDOR
-const PRODUCTION = process.env.NODE_ENV === 'production';
-const DEBUG = process.env.NODE_ENV === 'development';
+const PRODUCTION = process.env.NODE_ENV === 'production'
+const DEBUG = process.env.NODE_ENV === 'development'
 
 const INPUT_PATH = path.join(__dirname, 'src/')
 const OUTPUT_PATH = path.join(__dirname, 'dist/')
@@ -22,8 +21,8 @@ const baseConfig = {
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader",
+          fallback: 'style-loader',
+          use: 'css-loader',
         })
       },
       {
@@ -99,6 +98,9 @@ if (!BUILD_VENDOR) {
     }),
     new HtmlWebpackPlugin({
       template: path.join(INPUT_PATH, 'index.html'),
+      minify: PRODUCTION ? {
+        collapseWhitespace: true,
+      } : false,
     }),
   ])
   module.exports = appConfig
