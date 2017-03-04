@@ -31,4 +31,4 @@ cover
 node_modules
 
 # Build
-static/*
+dist

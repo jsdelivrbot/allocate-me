@@ -19,6 +19,7 @@ app = Flask(__name__)
 
 DURATION_REGEX = re.compile(r'([\d.]+) hrs?')
 DEFAULT_TIMEZONE = pytz.timezone('Australia/Melbourne')
+BUILD_DIR = os.path.join(app.root_path, '../', 'dist')
 
 
 def build_event(record):
@@ -102,7 +103,13 @@ def upload():
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return send_from_directory(BUILD_DIR, 'index.html')
+
+
+@app.route('/<path:path>')
+def send_static(path):
+    print(path)
+    return send_from_directory(BUILD_DIR, path)
 
 if __name__ == '__main__':
     app.run()

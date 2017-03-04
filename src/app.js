@@ -2,11 +2,11 @@ import Dropzone from 'dropzone'
 import FileSaver from 'file-saver'
 
 // CSS
-import 'css/app.css'
+import 'app.css'
 import 'dropzone/dist/dropzone.css'
 import 'normalize.css'
 
-import fileIcon from 'img/file-icon.png';
+import fileIcon from 'file-icon.png';
 
 Dropzone.options.allocateDropzone = {
   init() {

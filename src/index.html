@@ -2,21 +2,19 @@
 <html lang="en">
 <head>
   <title>Allocate Me</title>
-  <link rel="stylesheet" href="/static/app.css">
 </head>
 <body>
   <div class="container" role="main">
     <h1>Allocate Me</h1>
     <h2>Upload Timetable</h2>
 
-    <form action="{{ url_for('upload') }}" class="dropzone " id="allocate-dropzone"></form>
+    <form action="/upload" class="dropzone " id="allocate-dropzone"></form>
 
     <footer>
       <p>Copyright <a href="http://www.seankozer.com/">Sean Kozer</a> &copy; 2017</p>
     </footer>
   </div>
 
-  <script src="/static/app.js"></script>
-  <script src="/static/vendor.js"></script>
+  <script type="text/javascript" src="vendor.dll.js"></script>
 </body>
 </html>
