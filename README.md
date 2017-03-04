@@ -7,12 +7,11 @@ Simple web app to convert an exported timetable from Monash University's Allocat
 Inside a virtual env:
 
 ```bash
-pip install -r requirements.txt
 npm install
+pip install -r requirements.txt
 
-webpack
-export FLASK_DEBUG=1 FLASK_APP=app.py
-flask run
+npm run dev
+FLASK_DEBUG=1 FLASK_APP=app.py flask run
 ```
 
 In your browser, go to `http://localhost:5000`.

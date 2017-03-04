@@ -1,13 +1,18 @@
 import Dropzone from 'dropzone'
 import FileSaver from 'file-saver'
-import style from 'app.css'
-import dzStyle from 'dropzone/dist/dropzone.css'
+
+// CSS
+import 'css/app.css'
+import 'dropzone/dist/dropzone.css'
+import 'normalize.css'
+
+import fileIcon from 'img/file-icon.png';
 
 Dropzone.options.allocateDropzone = {
   init() {
     this.on('addedfile', (inputFile) => {
       // Set a default thumbnail.
-      this.emit('thumbnail', inputFile, '/static/file-icon.png');
+      this.emit('thumbnail', inputFile, fileIcon);
     })
 
     this.on('success', (inputFile, response) => {

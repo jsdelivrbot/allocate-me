@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Convert a Monash University timetable to iCal",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "NODE_ENV=production npm run build:vendor && NODE_ENV=production webpack",
+    "build:vendor": "BUILD_VENDOR=true webpack",
+    "dev": "npm run build:vendor && NODE_ENV=development webpack --watch --progress"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,10 @@
   "homepage": "https://github.com/skozer/allocate-me#readme",
   "dependencies": {
     "dropzone": "^4.3.0",
-    "file-saver": "^1.3.3"
+    "file-saver": "^1.3.3",
+    "normalize.css": "^5.0.0",
+    "optimize-css-assets-webpack-plugin": "^1.3.0",
+    "webpack-merge": "^3.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
@@ -26,6 +31,7 @@
     "css-loader": "^0.26.2",
     "extract-text-webpack-plugin": "^2.0.0",
     "style-loader": "^0.13.2",
+    "url-loader": "^0.5.8",
     "webpack": "^2.2.1"
   }
 }

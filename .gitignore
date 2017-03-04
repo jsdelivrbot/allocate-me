@@ -31,5 +31,4 @@ cover
 node_modules
 
 # Build
-static/bundle.js
-static/styles.css
+static/*
