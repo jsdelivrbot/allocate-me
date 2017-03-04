@@ -1,6 +1,7 @@
 {
   "name": "Allocate Me",
   "description": "Convert a Monash University timetable to iCal",
+  "logo": "https://cdn.rawgit.com/skozer/allocate-me/master/src/logo.svg",
   "repository": "https://github.com/skozer/allocate-me/",
   "buildpacks": [
     {
